@@ -444,7 +444,7 @@ def gitCheckout():
 
     shellCmd("/bin/rm -rf lrose-core")
     if (options.tag == "master"):
-        shellCmd("git clone https://github.com/NCAR/lrose-core")
+        shellCmd("git clone https://github.com/sjsprecious/lrose-core ; cd lrose-core ; git checkout js_derecho")
     else:
         shellCmd("git clone --branch " + releaseTag + \
                  " https://github.com/NCAR/lrose-core")
@@ -687,7 +687,19 @@ def buildPackage():
     cmakeBuildDir = os.path.join(codebaseDir, "build")
     os.makedirs(cmakeBuildDir)
     os.chdir(cmakeBuildDir)
-    cmd = cmakeExec + " .."
+
+    # link the X11 libraries to the lib path; this only works for Derecho
+    cmd = "ln -sf /glade/u/apps/derecho/23.09/spack/opt/spack/libxext/1.3.3/gcc/7.5.0/6nhl/lib/libXext.so " + prefixLibDir
+    shellCmd(cmd)
+    cmd = "ln -sf /glade/u/apps/derecho/23.09/spack/opt/spack/libx11/1.8.4/gcc/7.5.0/5i3o/lib/libX11.so " + prefixLibDir
+    shellCmd(cmd)
+
+    cmd = cmakeExec
+    cmd = cmd + " -DCMAKE_INSTALL_PREFIX=" + prefixDir
+    cmd = cmd + " -DLDFLAGS=" + prefixLibDir
+    cmd = cmd + " -DX11_X11_INCLUDE_PATH=/glade/u/apps/derecho/23.09/spack/opt/spack/libx11/1.8.4/gcc/7.5.0/5i3o/include"
+    cmd = cmd + " -DX11_LIB_DIR=/glade/u/apps/derecho/23.09/spack/opt/spack/libx11/1.8.4/gcc/7.5.0/5i3o"
+    cmd = cmd + " .."
     shellCmd(cmd)
     
     # build the libraries
