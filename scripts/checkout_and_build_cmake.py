@@ -695,11 +695,11 @@ def buildPackage():
     shellCmd(cmd)
 
     cmd = cmakeExec
-    cmd = cmd + " -DCMAKE_INSTALL_PREFIX=" + prefixDir
-    cmd = cmd + " -DLDFLAGS=" + prefixLibDir
-    cmd = cmd + " -DX11_X11_INCLUDE_PATH=/glade/u/apps/derecho/23.09/spack/opt/spack/libx11/1.8.4/gcc/7.5.0/5i3o/include"
-    cmd = cmd + " -DX11_LIB_DIR=/glade/u/apps/derecho/23.09/spack/opt/spack/libx11/1.8.4/gcc/7.5.0/5i3o"
-    cmd = cmd + " .."
+    cmd = cmd + " -DCMAKE_INSTALL_PREFIX=" + prefixDir
+    cmd = cmd + " -DLDFLAGS=" + prefixLibDir
+    cmd = cmd + " -DX11_X11_INCLUDE_PATH=/glade/u/apps/derecho/23.09/spack/opt/spack/libx11/1.8.4/gcc/7.5.0/5i3o/include"
+    cmd = cmd + " -DX11_LIB_DIR=/glade/u/apps/derecho/23.09/spack/opt/spack/libx11/1.8.4/gcc/7.5.0/5i3o"
+    cmd = cmd + " .."
     shellCmd(cmd)
     
     # build the libraries
